@@ -204,11 +204,17 @@
     <script>
         var map = L.map('map').setView([-8.488176017093187, 115.09666257297003], 10);
 
+
+
         // Basemap
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}&hl=en&gl=en&api_key=YOUR_GOOGLE_API_KEY', {
+    maxZoom: 20,
+    attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
+}).addTo(map);
+
+// Add GeoServer WFS layer
+var geojsonLayer = new L.GeoJSON.AJAX("http://localhost:8080/geoserver/responsiDIY/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=responsiDIY%3Alayerprovinsi&maxFeatures=50&outputFormat=application%2Fjson");
+        geojsonLayer.addTo(map);
 
         //Marker
         //L.marker([-7.774461552953178, 110.37452841845395]).addTo(map)
@@ -273,10 +279,10 @@
                     "<img src='{{ asset('storage/images/') }}/" + feature.properties.image +
                     "'class='' alt='' width='200'" + "<br>" + "<br>" + "</center>" +
 
-                    "<div class='d-flex flex-row mt-1'me-2>" +
+                    "<div class='d-flex flex-row mt-3'>" +
 
                     "<a href='{{ url('edit-point') }}/" + feature.properties.id +
-                    "' class='btn btn-warning'><i class='fa-solid fa-pen-to-square'></i></a>" +
+                    "' class='btn btn-warning me-2'><i class='fa-solid fa-pen-to-square'></i></a>" +
 
                     "<form action='{{ url('delete-point') }}/" + feature.properties.id + "' method='POST'>" +
                     '{{ csrf_field() }}' +
@@ -384,7 +390,17 @@
         };
 
         var layerControl = L.control.layers(null, overlayMaps).addTo(map);
+
+        /* Scale Bar */
+        L.control.scale({
+            maxWidth: 150,
+            position: 'bottomright'
+        }).addTo(map);
+
+
     </script>
+
+
 @endsection
 
 <!-- Leaflet JS -->

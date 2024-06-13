@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\Index2Controller;
 use App\Http\Controllers\PointController;
 use App\Http\Controllers\PolylineController;
 use App\Http\Controllers\PolygonController;
@@ -20,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MapController::class, 'index']) ->name('index');
+Route::get('/', [Index2Controller::class, 'index2']) ->name('index2');
+Route::get('/map', [MapController::class, 'index']) ->name('index');
 Route::get('/table', [MapController::class, 'table']) ->name('table');
 
 //create point
