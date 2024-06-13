@@ -1,5 +1,4 @@
-# responsipgweb2
-#Responsi PGWL 
+# Responsi PGWL 
 
 <h2>Nama Produk: BeachBuddy</h2>
 
@@ -27,7 +26,6 @@ BeachBuddy memudahkan Anda menemukan spot terbaik untuk bersantai, berpesta, ata
 <ul>
     <hr>
   <li>Landing page: menampilkan deskripsi produk dan beberapa konten terkait perjalanan wisata di Bali</li><br>
-    <br>
     <img src = "" width = "500"><br>
     </ul>
 
