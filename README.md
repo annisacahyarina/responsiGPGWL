@@ -39,6 +39,16 @@ BeachBuddy memudahkan Anda menemukan spot terbaik untuk bersantai, berpesta, ata
     <br>
     <img src = "" width = "500"><br>
     </ul>
+    
+  <li>Create point</li><br>
+    <br>
+    <img src = "" width = "500"><br>
+    </ul>
+    
+  <li>About</li><br>
+    <br>
+    <img src = "" width = "500"><br>
+    </ul>
 
   <li>Tabel data berisi lokasi Beach Club</li><br>
     <br>
