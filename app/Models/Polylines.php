@@ -19,4 +19,10 @@ class Polylines extends Model
     {
         return $this->select(DB::raw('id, name, "Description", st_asgeojson("Geometry") as geom, created_at, updated_at, image'))->get();
     }
+
+    public function polyline($id)
+
+    {
+        return $this->select(DB::raw('id, name, "Description", st_asgeojson("Geometry") as geom, created_at, updated_at, image'))->where('id', $id)->get();
+    }
 }

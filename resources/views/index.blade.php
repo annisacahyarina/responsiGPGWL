@@ -1,5 +1,27 @@
 @extends('layouts.template')
 
+ <!-- CSS -->
+ <style>
+    .center-text {
+        text-align: center;
+    }
+    .size {
+        size: 7pt;
+    }
+
+</style>
+
+<!-- Leaflet CSS-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+@yield('styles')
+
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css">
     <style>
@@ -32,13 +54,34 @@
                     <form action="{{ route('point-store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
+                            <label for="name" class="form-label">Nama Tempat</label>
                             <input type="text" class="name" id="name" name="name"
-                                placeholder="Fill polyline name">
+                                placeholder="Fill point name">
                         </div>
                         <div class="mb-3">
-                            <label for="Description" class="form-label">Description</label>
+                            <label for="deskripsi" class="form-label">Deskripsi</label>
+                            <input type="text" class="deskripsi" id="deskripsi" name="deskripsi"
+                                placeholder="Fill point name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Description" class="form-label">Alamat</label>
                             <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Rating</label>
+                            <textarea class="form-control" id="rating" name="rating" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jambuka" class="form-label">Jam Buka</label>
+                            <textarea class="form-control" id="jambuka" name="jambuka" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notelpon" class="form-label">No Telpon</label>
+                            <textarea class="form-control" id="notelpon" name="notelpon" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="socialmedia" class="form-label">Social Media</label>
+                            <textarea class="form-control" id="socialmedia" name="socialmedia" rows="3"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
@@ -62,7 +105,7 @@
         </div>
     </div>
 
-    <!-- Modal Create Polyline -->
+    <!-- Modal Create Polyline
     <div class="modal fade" id="PolylineModal" tabindex="-1" aria-labelledby="PolylineModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -103,9 +146,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <!-- Modal Create Polygon -->
+    <!-- Modal Create Polygon
     <div class="modal fade" id="PolygonModal" tabindex="-1" aria-labelledby="PolygonModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -146,7 +189,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 @endsection
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -159,7 +202,7 @@
     <script src="https://unpkg.com/terraformer@1.0.7/terraformer.js"></script>
     <script src="https://unpkg.com/terraformer-wkt-parser@1.1.2/terraformer-wkt-parser.js"></script>
     <script>
-        var map = L.map('map').setView([-7.772727426259866, 110.37742654022925], 13);
+        var map = L.map('map').setView([-8.488176017093187, 115.09666257297003], 10);
 
         // Basemap
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -168,9 +211,9 @@
         }).addTo(map);
 
         //Marker
-        L.marker([-7.774461552953178, 110.37452841845395]).addTo(map)
-            .bindPopup('Sekolah Vokasi UGM')
-            .openPopup();
+        //L.marker([-7.774461552953178, 110.37452841845395]).addTo(map)
+          //  .bindPopup('Sekolah Vokasi UGM')
+            //.openPopup();
 
         /* Digitize Function */
         var drawnItems = new L.FeatureGroup();
@@ -179,9 +222,9 @@
         var drawControl = new L.Control.Draw({
             draw: {
                 position: 'topleft',
-                polyline: true,
-                polygon: true,
-                rectangle: true,
+                polyline: false,
+                polygon: false,
+                rectangle: false,
                 circle: false,
                 marker: true,
                 circlemarker: false
@@ -225,21 +268,21 @@
         /* GeoJSON Point */
         var point = L.geoJson(null, {
             onEachFeature: function(feature, layer) {
-                var popupContent = "Nama: " + feature.properties.name + "<br>" +
-                    "Deskripsi: " + feature.properties.description + "<br>" +
-                    "Foto: <img src='{{ asset('storage/images/') }}/" + feature.properties.image +
-                    "'class='img-thumbnail' alt=''> " + "<br>" +
+                var popupContent = "<h4>" + "<b>" + feature.properties.name + "</h4>" + "</b>" +
+                     feature.properties.deskripsi + "<br>" + "<br>" + "<center>" +
+                    "<img src='{{ asset('storage/images/') }}/" + feature.properties.image +
+                    "'class='' alt='' width='200'" + "<br>" + "<br>" + "</center>" +
 
-                    "<div class='d-flex flex-row mt-3'>" +
+                    "<div class='d-flex flex-row mt-1'me-2>" +
 
                     "<a href='{{ url('edit-point') }}/" + feature.properties.id +
-                    "'class='btn btn-sm btn-warning me-2'><i class ='fa-solid fa-edit'></i></a>" +
+                    "' class='btn btn-warning'><i class='fa-solid fa-pen-to-square'></i></a>" +
 
-                    "<form action='{{ url('delete-point') }}/" + feature.properties.id + "'method='POST'>" +
+                    "<form action='{{ url('delete-point') }}/" + feature.properties.id + "' method='POST'>" +
                     '{{ csrf_field() }}' +
-                    '{{ method_field('DELETE') }}' +
+                    '{{ method_field('DELETE')}}' +
 
-                    "<button type='submit' class='btn btn-danger' onclick='return confirm(Yakin Anda akan menghapus data ini?)'><i class='fa-solid fa-trash-can'></i></button>" +
+                    "<button type='submit' class='btn btn-danger' onclick='return confirm(`Yakin Anda akan menghapus data ini?`)'><i class='fa-solid fa-trash-can'></i></button>" +
                     "</form>" +
 
                     "</div>"
@@ -259,7 +302,7 @@
             map.addLayer(point);
         });
 
-        /* GeoJSON Polyline */
+        /* GeoJSON Polyline
         var polyline = L.geoJson(null, {
             onEachFeature: function(feature, layer) {
                 var popupContent = "Nama: " + feature.properties.name + "<br>" +
@@ -295,9 +338,9 @@
         $.getJSON("{{ route('api.polylines') }}", function(data) {
             polyline.addData(data);
             map.addLayer(polyline);
-        });
+        });*/
 
-        /* GeoJSON Polygon */
+        /* GeoJSON Polygon
         var polygon = L.geoJson(null, {
             onEachFeature: function(feature, layer) {
                 var popupContent = "Nama: " + feature.properties.name + "<br>" +
@@ -331,18 +374,31 @@
         $.getJSON("{{ route('api.polygons') }}", function(data) {
             polygon.addData(data);
             map.addLayer(polygon);
-        });
+        });*/
 
         //layer control
         var overlayMaps = {
-            "Points": point,
-            "Polylines": polyline,
-            "Polygons": polygon
+            "Points": point
+            /*"Polylines": polyline,
+            "Polygons": polygon*/
         };
 
         var layerControl = L.control.layers(null, overlayMaps).addTo(map);
     </script>
 @endsection
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
 </body>
 

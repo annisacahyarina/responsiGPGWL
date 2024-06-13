@@ -29,21 +29,43 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('point-store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('update-point', $id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PATCH')
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="name" id="name" name="name"
                                 placeholder="Fill polyline name">
                         </div>
                         <div class="mb-3">
-                            <label for="Description" class="form-label">Description</label>
+                            <label for="Description" class="form-label">Alamat</label>
                             <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deskripsi" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Rating</label>
+                            <textarea class="form-control" id="rating" name="rating" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jambuka" class="form-label">Jam Buka</label>
+                            <textarea class="form-control" id="jambuka" name="jambuka" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notelpon" class="form-label">No Telpon</label>
+                            <textarea class="form-control" id="notelpon" name="notelpon" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="socialmedia" class="form-label">Social Media</label>
+                            <textarea class="form-control" id="socialmedia" name="socialmedia" rows="3"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
                             <input type="file" class="form-control" id="image_point" name="image"
                                 onchange="document.getElementById('preview-image-point').src = window.URL.createObjectURL(this.files[0])">
+                                <input type="hidden" class="form-control" id="image_old" name="image_old">
                         </div>
                         <div class="mb-3">
                             <img src=""alt="Preview" id="preview-image-point" class="img-thumbnail" width="400">
@@ -70,8 +92,7 @@
 
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
-    <script src="https://unpkg.com/terraformer@1.0.7/terraformer.js"></script>
-    <script src="https://unpkg.com/terraformer-wkt-parser@1.1.2/terraformer-wkt-parser.js"></script>
+    <script src="https://unpkg.com/@terraformer/wkt"></script>
     <script>
         var map = L.map('map').setView([-7.772727426259866, 110.37742654022925], 13);
 
@@ -81,10 +102,10 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        //Marker
+        /*Marker
         L.marker([-7.774461552953178, 110.37452841845395]).addTo(map)
             .bindPopup('Sekolah Vokasi UGM')
-            .openPopup();
+            .openPopup(); */
 
         /* Digitize Function */
         var drawnItems = new L.FeatureGroup();
@@ -113,14 +134,21 @@
 
         map.on('draw:edited', function(e) {
             var layer = e.layers;
-            var geojson = layer.toGeoJSON();
-
-           console.log(geojson);
 
            layer.eachLayer(function(layer) {
+            var geojson = layer.toGeoJSON();
+
+            var wkt = Terraformer.geojsonToWKT(geojson.geometry);
+
             $('#name').val(layer.feature.properties.name);
+            $('#deskripsi').val(layer.feature.properties.deskripsi);
             $('#Description').val(layer.feature.properties.description);
-            $('#Geometry').val(layer.toGeoJSON().geometry.coordinates);
+            $('#rating').val(layer.feature.properties.rating);
+            $('#jambuka').val(layer.feature.properties.jambuka);
+            $('#notelpon').val(layer.feature.properties.notelpon);
+            $('#socialmedia').val(layer.feature.properties.socialmedia);
+            $('#Geometry').val(wkt);
+            $('#image_old').val(layer.feature.properties.image);
             $('#preview-image-point').attr('src', '{{ asset('storage/images/') }}/' + layer.feature.properties.image);
             $('#PointModal').modal('show');
            });
@@ -133,22 +161,16 @@
 
                 drawnItems.addLayer(layer);
 
-                var popupContent = "Nama: " + feature.properties.name + "<br>" +
-                    "Deskripsi: " + feature.properties.description + "<br>" +
-                    "Foto: <img src='{{ asset('storage/images/') }}/" + feature.properties.image +
-                    "'class='img-thumbnail' alt=''> " + "<br>" +
+                var popupContent = "<h4> " + "<b>" + feature.properties.name + "</h4>"+ "</b>" + "<br>" + "<b>" +
+                    "Alamat: " + "</b>" + feature.properties.description + "<br>" +
+                 "<b>" +"Rating: " + "</b>" +  feature.properties.rating + "<br>" +
+                    "<b>" +"Jam Buka: " + "</b>" + feature.properties.jambuka + "<br>" +
+                    "<b>" +"No Telpon: " + "</b>" +  feature.properties.notelpon + "<br>" +
+                    "<b>" +"Social Media: " + "</b>" +  feature.properties.socialmedia + "<br>" +
 
-                    "<div class='d-flex flex-row mt-3'>" +
+                   "<b>" + "<br> <img src='{{ asset('storage/images/') }}/" + feature.properties.image +
+                    "'class='' alt='' width='200'> "
 
-                    "<a href='{{ url('edit-point') }}/" + feature.properties.id +
-                    "'class='btn btn-sm btn-warning me-2'><i class ='fa-solid fa-edit'></i></a>" +
-
-                    "<form action='{{ url('delete-point') }}/" + feature.properties.id + "'method='POST'>" +
-                    '{{ csrf_field() }}' +
-                    '{{ method_field('DELETE') }}' +
-
-                    "<button type='submit' class='btn btn-danger' onclick='return confirm(Yakin Anda akan menghapus data ini?)'><i class='fa-solid fa-trash-can'></i></button>" +
-                    "</form>" +
 
                     "</div>"
 

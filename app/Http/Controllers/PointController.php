@@ -26,7 +26,12 @@ class PointController extends Controller
                 'properties'=> [
                     'id' => $p->id,
                     'name'=> $p->name,
+                    'deskripsi'=> $p->deskripsi,
                     'description'=> $p->Description,
+                    'rating'=> $p->rating,
+                    'jambuka'=> $p->jambuka,
+                    'notelpon'=> $p->notelpon,
+                    'socialmedia'=> $p->socialmedia,
                     'image'=> $p->image,
                     'created_at' => $p->created_at,
                     'updated_at' => $p->updated_at
@@ -81,6 +86,11 @@ class PointController extends Controller
 
        $data = [
         'name' => $request->name,
+        'deskripsi' => $request->deskripsi,
+        'rating'=> $request->rating,
+        'jambuka'=> $request->jambuka,
+        'notelpon'=> $request->notelpon,
+        'socialmedia'=> $request->socialmedia,
         'Description' => $request->Description,
         'Geometry' => $request->Geometry,
         'image' => $filename
@@ -108,7 +118,12 @@ class PointController extends Controller
                 'properties'=> [
                     'id' => $p->id,
                     'name'=> $p->name,
+                    'deskripsi'=> $p->deskripsi,
                     'description'=> $p->Description,
+                    'rating'=> $p->rating,
+                    'jambuka'=> $p->jambuka,
+                    'notelpon'=> $p->notelpon,
+                    'socialmedia'=> $p->socialmedia,
                     'image'=> $p->image,
                     'created_at' => $p->created_at,
                     'updated_at' => $p->updated_at
@@ -141,8 +156,62 @@ class PointController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+
+        $request->validate([
+            'name' => 'required',
+            'Geometry' => 'required',
+            'image' => 'mimes:jpg,jpeg,png,tiff,gif[max:10000' //10MB
+        ],
+        [
+            'name.required' => 'Name is required',
+            'Geometry.required' => 'Location is required',
+            'image.mimes' => 'Image must be a file of type: jpg, jpeg, png, tiff, gif',
+            'image.max' => 'image must not exceed 10MB'
+        ]);
+
+            //create folder images
+            if (!is_dir('storage/images')) {
+                mkdir('storage/images', 0777);
+            } //jika direktori images tidak tersedia (dia akan cek dl), maka dia harus membuat mkdir (make directory) storage images dengan permission foldernya 0777
+
+           // upload image
+           if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '_point.' . $image->getClientOriginalExtension();
+            $image->move('storage/images', $filename);
+
+            //delete image
+            $image_old = $request->image_old;
+            if ($image_old !=null) {
+                unlink('storage/images/' . $image_old);
+            }
+
+           } else{
+            $filename = $request->image_old;
+           }
+
+           $data = [
+            'name' => $request->name,
+            'deskripsi' => $request->deskripsi,
+            'rating'=> $request->rating,
+            'jambuka'=> $request->jambuka,
+            'notelpon'=> $request->notelpon,
+            'socialmedia'=> $request->socialmedia,
+            'Description' => $request->Description,
+            'Geometry' => $request->Geometry,
+            'image' => $filename
+        ];
+
+            //update point
+            if(!$this->point->find($id)->update($data)) {
+                return redirect()->back()->with('error', 'Failed to update point');
+            }
+
+
+            //redirect to map
+            return redirect()->back()->with('success', 'Point updated successfully');
+        }
+
 
     /**
      * Remove the specified resource from storage.
@@ -171,7 +240,7 @@ class PointController extends Controller
 
     public function table()
     {
-        $points = $this->point->all();
+        $points = $this->point->points();
 
         $data = [
             'title' => 'Table Point',

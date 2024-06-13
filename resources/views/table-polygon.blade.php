@@ -4,48 +4,33 @@
     <div class="container mt-4">
         <div class="card shadow">
             <div class="card-header">
-                <h3>Data Point</h3>
+                <h3>Data Polygon</h3>
             </div>
             <div class="card-body">
                 <table class ="table table-bordered table-striped" id="example">
                     <thead>
-                        <tr style="align-content: center">
-                            <th style="align-content: center">No</th>
-                            <th style="align-content: center">Nama</th>
-                            <th style="align-content: center">Deskripsi</th>
-                            <th style="align-content: center">Alamat</th>
-                            <th style="align-content: center">Rate</th>
-                            <th style="align-content: center">Jam Buka</th>
-                            <th style="align-content: center">No Telpon</th>
-                            <th style="align-content: center">Social Media</th>
-                            <th style="align-content: center">Gambar</th>
-                            <th style="align-content: center">Geometry</th>
-                            <th style="align-content: center">Created at</th>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Created at</th>
                         </tr>
 
-
                     </thead>
-                </div>
                     <tbody>
                         @php
                         $no = 1 @endphp
-                        @foreach ($points as $p)
+                        @foreach ($polygons as $p)
                             @php
                                 $geometry = json_decode($p->geom);
                             @endphp
                             <tr>
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $p->name }}</td>
-                                <td>{{ $p->deskripsi }}</td>
                                 <td>{{ $p->Description }}</td>
-                                <td>{{ $p->rating }}</td>
-                                <td>{{ $p->jambuka }}</td>
-                                <td>{{ $p->notelpon }}</td>
-                                <td>{{ $p->socialmedia }}</td>
                                 <td>
                                     <img src = "{{ asset('storage/images/' . $p->image) }}" alt="" width="200">
-                                </td>
-                                <td>{{ $geometry->coordinates[1] . ', ' . $geometry->coordinates[0] }}
                                 </td>
                                 <td>{{ date_format($p->created_at, 'D, d M Y, Y, H:i:s') }}</td>
                             </tr>
