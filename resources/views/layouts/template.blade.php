@@ -47,7 +47,7 @@
                                 class="fa-solid fa-house"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('index') }}"><i class="fa-solid fa-table"></i> Map</a>
+                        <a class="nav-link" href="{{ route('index') }}"><i class="fa-solid fa-map"></i> Map</a>
                     {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-table"></i>
                            Table
@@ -66,7 +66,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#infoModal"><i
-                                class="fa-solid fa-circle-info"></i> Card</a>
+                                class="fa-solid fa-circle-info"></i> About</a>
                     </li>
 
 
@@ -100,7 +100,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Card</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

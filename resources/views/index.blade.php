@@ -212,9 +212,6 @@
     attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
 }).addTo(map);
 
-// Add GeoServer WFS layer
-var geojsonLayer = new L.GeoJSON.AJAX("http://localhost:8080/geoserver/responsiDIY/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=responsiDIY%3Alayerprovinsi&maxFeatures=50&outputFormat=application%2Fjson");
-        geojsonLayer.addTo(map);
 
         //Marker
         //L.marker([-7.774461552953178, 110.37452841845395]).addTo(map)
