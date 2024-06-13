@@ -20,7 +20,9 @@ BeachBuddy memudahkan Anda menemukan spot terbaik untuk bersantai, berpesta, ata
 
 <h2>Tangkapan layar komponen penting produk:</h2>
 <ul>
-  <li>Landing page</li><br><p>Menampilkan deskripsi produk dan beberapa konten terkait perjalanan wisata ke Bali</p><img src = "assets/img/referensi/landingpage.png" width = "500"><br>
+  <li>Landing page</li><br><p>Menampilkan deskripsi produk dan beberapa konten terkait perjalanan wisata ke Bali</p>
+    <br>
+    <img src = "storage\app\public\images\landingpage.png" width = "500"><br>
    <li>Peta persebaran restoran gudeg</li><br><img src = "storage\app\public\images\landingpage.png" width = "500"><br>
    <li>Basisdata PHPMyAdmin</li><br><img src = "assets/img/referensi/database.png" width = "500"><br>
   <img src = "assets/img/referensi/database2.png" width = "500">
