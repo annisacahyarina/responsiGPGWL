@@ -7,25 +7,49 @@ BeachBuddy memudahkan Anda menemukan spot terbaik untuk bersantai, berpesta, ata
 
 <h2>Komponen pembangun produk: </h2>
 <ul>
-<li>Leaflet JS: menampilkan peta dalam web yang dilengkapi dengan fitur</li>
-<li>Geoserver: menyimpan dan mengelola data geospasial dalam server GIS</li>
-<li>bootstrap: mengatur dan mengelola tata letak website</li>
-<li>DBeaver: Database untuk menyimpan data</li>
+<li>Laravel PHP --> framework PHP untuk mengembangkan web yang berisi banyak modul dimana terdiri dari 3 komponen utama: model-view-controller </li>
+<li>HTML --> Bahasa pembangun utama untuk membangun Website </li>
+<li>CSS --> Bahasa pendukung untuk style dari website yang dibangun dan mengatur tampilan elemen </li>
+<li>PHP --> Bahasa pemrograman open-source yang dapat digunakan untuk membangun web menjadi lebih dinamis dan interaktif </li>
+<li>JavaScript --> Bahasa pemrograman open-source yang dapat digunakan untuk membangun web menjadi lebih dinamis dan interaktif </li>
+<li>Boostrap --> Framework CSS untuk pengembangan front-end website </li>
+<li>FontAwesome --> Library font icon berbasis CSS </li>
+<li>DataTables --> Plugin JQuery untuk pengelolaan data dalam bentuk grid </li>
+<li>Leaflet --> library untuk menampilkan webmap </li>
 </ul>
 
 <h2>Sumber data:</h2>
 <ul>
-<li> Data titik persebaran beach club di Bali</li
+<li> 1. Data titik persebaran beach club di Bali</li
 </ul>
 
 <h2>Tangkapan layar komponen penting produk:</h2>
 <ul>
-  <li>Landing page</li><br><p>Menampilkan deskripsi produk dan beberapa konten terkait perjalanan wisata ke Bali</p>
+    <hr>
+  <li>Landing page: menampilkan deskripsi produk dan beberapa konten terkait perjalanan wisata di Bali</li><br>
     <br>
     <img src = "" width = "500"><br>
-   <li>Peta persebaran restoran gudeg</li><br><img src = "storage\app\public\images\landingpage.png" width = "500"><br>
-   <li>Basisdata PHPMyAdmin</li><br><img src = "assets/img/referensi/database.png" width = "500"><br>
-  <img src = "assets/img/referensi/database2.png" width = "500">
+    </ul>
+
+     <hr>
+  <li>Pop up</li><br>
+    <br>
+    <img src = "" width = "500"><br>
+    </ul>
+    
+  <li>Halaman peta</li><br>
+    <br>
+    <img src = "" width = "500"><br>
+    </ul>
+
+  <li>Tabel data berisi lokasi Beach Club</li><br>
+    <br>
+    <img src = "" width = "500"><br>
+    </ul>
+    
+  <li>Dashboard</li><br>
+    <br>
+    <img src = "" width = "500"><br>
 </ul>
 
 
